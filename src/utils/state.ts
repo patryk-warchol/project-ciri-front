@@ -1,3 +1,5 @@
+import { ShoppingItemsIndexState } from 'umi';
+
 type LoadingState = {
   effects: {
     [k: string]: boolean;
@@ -6,6 +8,7 @@ type LoadingState = {
 
 export type StateType = {
   loading: LoadingState;
+  shoppingItems: ShoppingItemsIndexState;
 };
 
 export default StateType;

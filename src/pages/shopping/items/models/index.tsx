@@ -44,7 +44,7 @@ const ShoppingItemsIndexModel: ShoppingItemsIndexModel = {
         if (pathname === '/shopping/items') {
           dispatch({ type: 'fetchList', payload: { page: query?.page || 1 } });
           // if (query?.page) {
-            
+
           // } else {
           //   dispatch({ type: 'fetchList' });
           // }
@@ -101,8 +101,10 @@ const ShoppingItemsIndexModel: ShoppingItemsIndexModel = {
   effects: {
     *fetchList(action, { call, put }) {
       try {
-        const shoppingItems = yield call(ShoppingItemService.list,action.payload || { page: 1 });
-        console.log(shoppingItems)
+        const shoppingItems = yield call(
+          ShoppingItemService.list,
+          action.payload || { page: 1 },
+        );
         yield put({ type: 'setList', payload: shoppingItems });
       } catch (e) {}
     },

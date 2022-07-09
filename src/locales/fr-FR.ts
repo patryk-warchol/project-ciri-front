@@ -1,3 +1,16 @@
 export default {
-  'menu.shoppingItems': 'Liste de course'
+  'auth.logout': 'Se déconnecter',
+  'defaults.add': 'Ajouter',
+  'defaults.edit': 'Modifier',
+  'defaults.save': 'Enregistrer',
+  'defaults.delete': 'Supprimer',
+  'menu.shoppingItems': 'Liste de course',
+  'menu.signIn': 'Connexion',
+  'menu.user.callback': 'Callback',
+  'shoppingItems.listTitle': 'Liste de courses',
+  'shoppingItems.newTitle': 'Ajouter un produit',
+  'shoppingItems.editTitle': 'Modifier {title}',
+  'shoppingItems.attributes.price': 'Prix',
+  'shoppingItems.attributes.title': 'Produit',
+  'shoppingItems.attributes.quantity': 'Quantité',
 };

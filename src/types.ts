@@ -1,6 +1,6 @@
 export type ShoppingItemType = {
-  id: number;
-  title: string;
-  price: number;
-  quantity: number;
+  id?: number;
+  title?: string;
+  price?: number;
+  quantity?: number;
 };

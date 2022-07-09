@@ -3,8 +3,8 @@ import { get } from 'lodash';
 import { history } from 'umi';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import qs from 'qs';
-import handleNotifications from './handleNotifications';
-// import UmiAuth from '@9troisquarts/utils.umi-auth';
+import handleNotifications from './notifications/handleNotifications';
+import UmiAuth from '@9troisquarts/utils.umi-auth';
 
 const config = require(`../config${
   process.env.NODE_ENV === 'development' ? '.dev' : ''
@@ -28,7 +28,7 @@ client.interceptors.request.use(
       qs.stringify(params, { arrayFormat: 'brackets' });
     config.headers = {
       ...(config.headers || {}),
-      // ...UmiAuth.authenticationHeaders(),
+      ...UmiAuth.authenticationHeaders(),
       ...(config.httpRequest ? {} : defaultHeaders),
     };
     if (
@@ -45,8 +45,8 @@ client.interceptors.request.use(
 client.interceptors.response.use(
   (response) => {
     const { data } = response;
-    // const authHeaders = UmiAuth.extractAuthHeaders(response);
-    // if (authHeaders['access-token']) UmiAuth.setAuthInLS(authHeaders);
+    const authHeaders = UmiAuth.extractAuthHeaders(response);
+    if (authHeaders['access-token']) UmiAuth.setAuthInLS(authHeaders);
     if (data) {
       const notifications = get(data, 'data.notifications', null);
       if (notifications) handleNotifications(notifications);
@@ -54,8 +54,8 @@ client.interceptors.response.use(
     return camelizeKeys(response?.data?.data);
   },
   ({ response }) => {
-    // const authHeaders = UmiAuth.extractAuthHeaders(response);
-    // if (authHeaders['access-token']) UmiAuth.setAuthInLS(authHeaders);
+    const authHeaders = UmiAuth.extractAuthHeaders(response);
+    if (authHeaders['access-token']) UmiAuth.setAuthInLS(authHeaders);
     if (response && response.status === 422) {
       const { data } = response;
       if (data) {
@@ -74,7 +74,7 @@ client.interceptors.response.use(
       ]);
     }
     if (response && response.status === 401) {
-      // UmiAuth.logout();
+      UmiAuth.logout();
     }
     return response?.data?.data;
   },

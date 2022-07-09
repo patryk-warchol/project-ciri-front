@@ -1,20 +1,19 @@
 import client from '@/utils/axiosClient';
-// import castAttributesFromModel from '@/utils/castAttributesFromDefinition';
+import castAttributesFromModel from '@/utils/castAttributesFromDefinition';
 
-// const userDefinition = {
-//   email: 'String',
-//   firstname: 'String',
-//   lastname: 'String',
-//   isAdmin: 'Boolean',
-//   isManager: 'Boolean',
-//   isHrOrg: 'Boolean',
-// };
+const shoppingItemDefinition = {
+  title: 'String',
+  quantity: 'Float',
+  price: 'Float',
+};
 
 class ShoppingItemService {
   static list(search = {}) {
-    return client.get('/shopping/items', { params: search }).then((response) => {
-      return response;
-    });
+    return client
+      .get('/shopping/items', { params: search })
+      .then((response) => {
+        return response;
+      });
   }
 
   // static get(id) {
@@ -23,13 +22,18 @@ class ShoppingItemService {
   //   });
   // }
 
-  // static save(user) {
-  //   const attributes = castAttributesFromModel(userDefinition, user);
-  //   if (user.id) {
-  //     return client.put(`/users/${user.id}`, { user: attributes });
-  //   }
-  //   return client.post('/users', { user: attributes });
-  // }
+  static save(shoppingItem) {
+    const attributes = castAttributesFromModel(
+      shoppingItemDefinition,
+      shoppingItem,
+    );
+    if (shoppingItem.id) {
+      return client.put(`/shopping/items/${shoppingItem.id}`, {
+        shoppingItem: attributes,
+      });
+    }
+    return client.post('/shopping/items', { shoppingItem: attributes });
+  }
 
   // static delete(id) {
   //   return client.delete(`/users/${id}`);
